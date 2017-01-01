@@ -13,7 +13,6 @@
  */
 ;
 import getRandomWords from '../src'
-import * as most from 'most'
 import { __assign as assign } from 'tslib'
 
 interface TestResult {
@@ -26,14 +25,6 @@ const result: TestResult = {}
 beforeEach (() => {
   delete result.value
   delete result.error
-})
-
-let randombytes: jasmine.Spy
-
-beforeEach (() => {
-  randombytes = jasmine.createSpy('randombytes')
-  .and.callFake((length: number) => // convert (index >>> 1) alternatively to low and high bytes
-    new Uint16Array(length).map((v, i) => i % 2 ? (i >>> 1) & 255 : i >>> 9))
 })
 
 function sum (a: number, b: number) {
@@ -60,11 +51,20 @@ describe('getRandomWords (opts?: Partial<RandomWordsFactorySpec>): ' +
 })
 
 describe('randomwords (length: number): Uint16Array', () => {
+  let randombytes: jasmine.Spy
+  let randomwords: (length: number) => Uint16Array
+
+  beforeEach (() => {
+    randombytes = jasmine.createSpy('randombytes')
+    .and.callFake((length: number) => // convert (index >>> 1) alternatively to low and high bytes
+      new Uint16Array(length).map((v, i) => i % 2 ? (i >>> 1) & 255 : i >>> 9))
+    randomwords = getRandomWords({ randombytes: randombytes })
+    result.value = []
+    result.error = []
+  })
+
   describe('when called with a positive integer smaller than 32768', () => {
     beforeEach(() => {
-      const randomwords = getRandomWords({ randombytes: randombytes })
-      result.value = []
-      result.error = []
       ;[ 0, 64, 32767 ]
       .reduce((result, length) => {
         try {
@@ -91,9 +91,6 @@ describe('randomwords (length: number): Uint16Array', () => {
   describe('when called with anything else than a positive integer ' +
   'smaller than 32768', () => {
     beforeEach(() => {
-      const randomwords = getRandomWords({ randombytes: randombytes })
-      result.value = []
-      result.error = []
       ;[ -1, 32768, true, 'foo', () => {}, [ 42 ], { foo: 'foo' } ]
       .reduce((result, arg) => {
         try {

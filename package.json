@@ -1,6 +1,6 @@
 {
   "name": "randomwords",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "generate Uint16Array with cryptographically-secure random 16-bit integer (word) entries, like randombytes for words",
   "main": "dist/index",
   "scripts": {
@@ -38,9 +38,6 @@
     "url": "https://github.com/zenyway/randomwords/issues"
   },
   "homepage": "https://github.com/zenyway/randomwords#readme",
-  "dependencies": {
-    "most": "^1.1.1"
-  },
   "devDependencies": {
     "@types/debug": "0.0.29",
     "@types/jasmine": "^2.5.38",

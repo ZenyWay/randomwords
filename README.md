@@ -18,7 +18,7 @@ const words = randomwords(8) // Uint16Array with 8 cryptographically-secure rand
 words.forEach(log)
 ```
 
-a live version of this example can be viewed [here](https://cdn.rawgit.com/ZenyWay/randomwords/v1.0.0/spec/example/index.html)
+a live version of this example can be viewed [here](https://cdn.rawgit.com/ZenyWay/randomwords/v1.0.1/spec/example/index.html)
 in the browser console,
 or by cloning this repository and running the following commands from a terminal:
 ```bash
@@ -32,7 +32,7 @@ the files of this example are available [here](./spec/example).
 coded in `Typescript 2`, transpiled to `ES5`.
 
 for a detailed specification of the API,
-run the [unit tests](https://cdn.rawgit.com/ZenyWay/randomwords/v1.0.0/spec/web/index.html)
+run the [unit tests](https://cdn.rawgit.com/ZenyWay/randomwords/v1.0.1/spec/web/index.html)
 in your browser.
 
 # <a name="contributing"></a> CONTRIBUTING

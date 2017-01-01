@@ -2231,13 +2231,6 @@ beforeEach(function () {
     delete result.value;
     delete result.error;
 });
-var randombytes;
-beforeEach(function () {
-    randombytes = jasmine.createSpy('randombytes')
-        .and.callFake(function (length) {
-        return new Uint16Array(length).map(function (v, i) { return i % 2 ? (i >>> 1) & 255 : i >>> 9; });
-    });
-});
 function sum(a, b) {
     return a + b;
 }
@@ -2259,11 +2252,20 @@ describe('getRandomWords (opts?: Partial<RandomWordsFactorySpec>): ' +
     });
 });
 describe('randomwords (length: number): Uint16Array', function () {
+    var randombytes;
+    var randomwords;
+    beforeEach(function () {
+        randombytes = jasmine.createSpy('randombytes')
+            .and.callFake(function (length) {
+            return new Uint16Array(length).map(function (v, i) { return i % 2 ? (i >>> 1) & 255 : i >>> 9; });
+        });
+        randomwords = src_1.default({ randombytes: randombytes });
+        result.value = [];
+        result.error = [];
+    });
     describe('when called with a positive integer smaller than 32768', function () {
         beforeEach(function () {
-            var randomwords = src_1.default({ randombytes: randombytes });
-            result.value = [];
-            result.error = [];
+            ;
             [0, 64, 32767]
                 .reduce(function (result, length) {
                 try {
@@ -2289,9 +2291,7 @@ describe('randomwords (length: number): Uint16Array', function () {
     describe('when called with anything else than a positive integer ' +
         'smaller than 32768', function () {
         beforeEach(function () {
-            var randomwords = src_1.default({ randombytes: randombytes });
-            result.value = [];
-            result.error = [];
+            ;
             [-1, 32768, true, 'foo', function () { }, [42], { foo: 'foo' }]
                 .reduce(function (result, arg) {
                 try {
