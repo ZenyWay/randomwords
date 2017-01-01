@@ -1,6 +1,6 @@
 {
   "name": "randomwords",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "generate Uint16Array with cryptographically-secure random 16-bit integer (word) entries, like randombytes for words",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -10,7 +10,7 @@
     "example": "npm run example:bundle && npm run example:serve",
     "example:serve": "http-server -c-1 -i -e html -o -p 6510 spec/example",
     "preexample:bundle": "rimraf spec/example/*.js",
-    "example:bundle": "browserify spec/example/index.ts -p [ tsify -p spec/example ] --exclude debug -t uglifyify -o spec/example/index.js",
+    "example:bundle": "browserify spec/example/index.ts -p [ tsify -p spec/example ] --exclude debug --exclude randombytes -t uglifyify -o spec/example/index.js",
     "prepublish": "npm run dist",
     "pretest": "mkdirp spec/reports && rimraf spec/reports/*",
     "test": "karma start spec/karma.conf.js --single-run",
@@ -21,7 +21,7 @@
     "test:ci": "karma start spec/karma-coverage.conf.js --single-run && remap-istanbul -i spec/reports/coverage/chrom*/coverage.json -o spec/reports/coverage/lcov.info -t lcovonly",
     "test:web:serve": "http-server -c-1 -o -p 6510 spec/web",
     "pretest:web": "rimraf spec/web/*.js",
-    "test:web": "browserify spec/*.spec.ts -p [ tsify -p spec ] --exclude tslib -o spec/web/index.spec.js && npm run test:web:serve"
+    "test:web": "browserify spec/*.spec.ts -p [ tsify -p spec ] --exclude tslib --exclude randombytes -o spec/web/index.spec.js && npm run test:web:serve"
   },
   "repository": {
     "type": "git",
@@ -71,5 +71,8 @@
     "typescript": "^2.1.4",
     "uglifyify": "^3.0.4",
     "watchify": "^3.8.0"
+  },
+  "dependencies": {
+    "randombytes": "^2.0.3"
   }
 }
